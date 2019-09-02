@@ -5,11 +5,12 @@ const chalk = require('chalk');
 
 const app = express();
 const port = process.env.PORT || 4004;
+const courses = require('./courses');
 
 app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
-  res.send('initial commit');
+  res.json(courses);
 });
 
 app.listen(port, () => debug(`listening on port ${chalk.green(port)}`));
