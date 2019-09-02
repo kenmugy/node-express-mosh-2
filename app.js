@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const debug = require('debug')('app');
 const chalk = require('chalk');
+const Joi = require('joi');
 
 const app = express();
 const port = process.env.PORT || 4004;
@@ -30,6 +31,21 @@ app.get('/api/courses/:id', (req, res) => {
 
 // post stuff
 app.post('/api/courses', (req, res) => {
+  // joi schema
+  const schema = {
+    name: Joi.string()
+      .min(4)
+      .required()
+  };
+  const result = Joi.validate(req.body, schema);
+  const { error } = result;
+  if (error) {
+    const {
+      details: [{ message }]
+    } = error;
+    return res.status(400).send(message);
+  }
+
   const course = {
     id: courses.length + 1,
     name: req.body.name
