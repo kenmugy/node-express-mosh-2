@@ -41,7 +41,7 @@ app.get('/api/courses', (req, res) => {
 app.get('/api/courses/:id', (req, res) => {
   const course = courses.find(course => course.id === parseInt(req.params.id));
   if (!course)
-    return res.status(404).json({ error: 'couldnt find course by that id' });
+    return res.status(404).json({ error: "couldn't find course by that id" });
   res.json(course);
 });
 
@@ -49,7 +49,7 @@ app.get('/api/courses/:id', (req, res) => {
 app.post('/api/courses', (req, res) => {
   // joi schema
   const message = checkValidity(req.body);
-  if (message) res.status(400).send(message);
+  if (message) return res.status(400).send(message);
   const course = {
     id: courses.length + 1,
     name: req.body.name
@@ -61,10 +61,21 @@ app.post('/api/courses', (req, res) => {
 // implementing put stuff
 app.put('/api/courses/:id', (req, res) => {
   const course = courses.find(course => course.id === parseInt(req.params.id));
+  if (!course)
+    return res.status(404).json({ error: "couldn't find course by that id" });
   const message = checkValidity(req.body);
-  if (message) res.status(400).send(message);
+  if (message) return res.status(400).send(message);
   course.name = req.body.name;
   res.send(course);
+});
+
+// implementing delete request
+app.delete('/api/courses/:id', (req, res) => {
+  const course = courses.find(course => course.id === parseInt(req.params.id));
+  if (!course)
+    return res.status(404).json({ error: "couldn't find course by that id" });
+  courses.splice(courses.indexOf(course), 1);
+  res.send(courses);
 });
 
 app.listen(port, () => debug(`listening on port ${chalk.green(port)}`));
