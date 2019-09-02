@@ -1,0 +1,25 @@
+{
+  "name": "node-express-2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "kenmugy <kenmugy@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "DEBUG=app nodemon app"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "joi": "^14.3.1",
+    "mocha": "^6.2.0",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.19.1"
+  },
+  "nodemonConfig": {
+    "delay": "2000",
+    "env": {
+      "port": "6000"
+    }
+  }
+}
